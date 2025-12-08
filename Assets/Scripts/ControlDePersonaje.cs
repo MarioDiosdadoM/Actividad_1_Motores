@@ -1,18 +1,20 @@
+//Debido a que las nuevas versiones de Unity dificultan el uso del viejo sistema de inputs he decidido usar el Input System
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ControlDePersonaje : MonoBehaviour
 {
 
-    public float velocidadMovimiento = 8f;
-    public float velocidadRotacion = 200f;
+    public float velocidadMovimiento = 8f;   //Variable para modificar la velocidad de movimiento desde el inspector
+    public float velocidadRotacion = 200f;   //Variable para modificar la velocidad de rotación desde el inspector
 
-    private CharacterController controlador;
+    private CharacterController controlador;     
     private PlayerControls controles;
 
     
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Awake()
     {
         controlador = GetComponent < CharacterController >();
