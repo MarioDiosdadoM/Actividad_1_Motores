@@ -15,6 +15,8 @@ public class Estatuas : MonoBehaviour, Interactuable
     public TextMeshProUGUI textoPista;
     public float temporizador = 3f;
 
+    public MonoBehaviour[] trampa;
+
     private bool activada = false;
     
     public void Interactuar()
@@ -22,6 +24,15 @@ public class Estatuas : MonoBehaviour, Interactuable
         if (activada) return;
 
         activada = true;
+
+        foreach (MonoBehaviour t in trampa)
+        {
+
+            Interfaztrampas trampa = t as Interfaztrampas;
+            if (t != null) trampa.Desactivar();
+
+        }
+
 
         foreach (Puertas puerta in puertas)
         {

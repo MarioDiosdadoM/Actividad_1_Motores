@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Sierra : MonoBehaviour
+public class Sierra : MonoBehaviour, Interfaztrampas
 {
     public Transform puntoA;
     public Transform puntoB;
@@ -8,6 +8,8 @@ public class Sierra : MonoBehaviour
     public float velRotacion = 3f;
 
     private Vector3 objetivoActual;
+
+    private bool activa = true;
 
 
     void Awake()
@@ -19,15 +21,21 @@ public class Sierra : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!activa) return;
+       
         transform.Rotate(Vector3.up * 360f * velRotacion * Time.deltaTime);
-
-       transform.position = Vector3.MoveTowards(transform.position, objetivoActual, velocidad * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, objetivoActual, velocidad * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, objetivoActual) < 0.05f)
         {
             objetivoActual = objetivoActual == puntoA.position ? puntoB.position : puntoA.position;
         }
 
+    }
+
+    public void Desactivar()
+    {
+        activa = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,7 +49,7 @@ public class Sierra : MonoBehaviour
 
             if (reaparicion != null)
             {
-                reaparicion.Reaparecer();
+                reaparicion.Morir();
             }
         }
     }

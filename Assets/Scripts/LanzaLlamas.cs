@@ -1,13 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
-public class LanzaLlamas : MonoBehaviour
+public class LanzaLlamas : MonoBehaviour, Interfaztrampas
 {
     private ParticleSystem llamas;
     private Collider peligro;
 
     public float tiempoEncendido = 2f;
     public float tiempoApagado = 2f;
+
+    private bool activa = true;
 
     private void Awake()
     {
@@ -23,7 +25,7 @@ public class LanzaLlamas : MonoBehaviour
 
     private System.Collections.IEnumerator CicloLlamas()
     {
-        while (true)
+        while (activa)
         {
             Encender();
             yield return new WaitForSeconds(tiempoEncendido);
@@ -45,6 +47,14 @@ public class LanzaLlamas : MonoBehaviour
         peligro.enabled = false;
     }
 
+    public void Desactivar()
+    {
+        activa = false;
+        llamas.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        peligro.enabled = false;
+        enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Contacto con lanzallamas");
@@ -55,7 +65,7 @@ public class LanzaLlamas : MonoBehaviour
 
             if (reaparicion != null)
             {
-                reaparicion.Reaparecer();
+                reaparicion.Morir();
             }
         }
     }
